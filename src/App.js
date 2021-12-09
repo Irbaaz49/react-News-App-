@@ -1,5 +1,5 @@
 
-import './App.css';
+// import '..App.js';
 
 import React, { Component } from 'react'
 import NavBar from './components/NavBar';
