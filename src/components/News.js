@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+
+
 export class News extends Component {
   articles = [
     {
@@ -67,7 +69,7 @@ export class News extends Component {
   }
   async componentDidMount() {
     let url =
-      "https://newsapi.org/v2/top-headlines?country=in&apiKey=b0c86827d8bf427abeb5379c1fcbfbc3";
+      `https://newsapi.org/v2/top-headlines?country=in&apiKey=b0c86827d8bf427abeb5379c1fcbfbc3&pageSize=${this.props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
@@ -77,7 +79,7 @@ export class News extends Component {
     console.log("previous");
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=b0c86827d8bf427abeb5379c1fcbfbc3&page=${
       this.state.page - 1
-    }&pageSize=20`;
+    }&pageSize=${this.props.pageSize}`;
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
@@ -89,10 +91,10 @@ export class News extends Component {
   };
   nextPage = async () => {
     console.log("next ");
-    if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {
+    if (this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)) {
     } 
     else {
-      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=b0c86827d8bf427abeb5379c1fcbfbc3&page=${this.state.page + 1}&pageSize=20`;
+      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=b0c86827d8bf427abeb5379c1fcbfbc3&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
       let data = await fetch(url);
       let parsedData = await data.json();
       console.log(parsedData);
@@ -106,9 +108,8 @@ export class News extends Component {
 
   render() {
     return (
-      <div className="container my-3 bg-dark">
-        <h2>News-App Top Headlines</h2>
-
+      <div className="container my-3  ">
+        <h1 className="text-center text-dark">News-App Top Headlines</h1>
         <div className="row">
           {this.state.articles.map((element) => {
             return (
@@ -137,6 +138,8 @@ export class News extends Component {
           <button
             type="button"
             onClick={this.nextPage}
+            disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)}
+          
             className="btn btn-sm btn-primary"
           >
             Next &rarr;
