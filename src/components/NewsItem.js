@@ -5,7 +5,7 @@ export class NewsItem extends Component {
     let { title, description, imageUrl, newsUrl, author , date, source } = this.props;
     return (
       <div className="my-3">
-        <span class="badge bg-danger">{source}</span>
+        <span className="badge bg-danger">{source}</span>
         <div className="card">
           <img src={!imageUrl?"https://i0.wp.com/whatsupnewp.com/wp-content/uploads/2016/06/maxresdefault.jpg?fit=1920%2C1080&ssl=1":imageUrl} className="card-img-top" alt="..." />
           <div className="card-body">
